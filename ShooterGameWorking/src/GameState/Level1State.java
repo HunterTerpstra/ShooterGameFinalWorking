@@ -26,14 +26,10 @@ public class Level1State extends GameState {
 	Random r = new Random();
 	Enemy e ;
 	
-	private int enemyCount = 1;
-	private int enemyKilled = 0;
-	public static int wave = 0;
+	public static int wave;
 	
 	public Level1State(GameStateManager gsm) {//constructor for menu takes in the current game state
-		
 		this.gsm = gsm;
-
 		init();
 	}
 
@@ -42,14 +38,15 @@ public class Level1State extends GameState {
 		tileMap = new TileMap("/Level1Map.png");
 		tileMap.LoadLevel();
 		bg = new Background("/ArenaFloor.jpg");
-		
+		wave = 1;
 		c = new Controller();
 		
 		player = new Player(tileMap, this);
 		player.setPosition(100, 100);
-		createEnemy(enemyCount);
-	
+		createEnemy(wave);
+		
 	}
+	
 	public static void UI(Graphics2D g){
 		Font fnt0 = new Font("arial", Font.BOLD, 12);
 		g.setColor(Color.BLUE);
@@ -67,6 +64,7 @@ public class Level1State extends GameState {
 		
 	
 	}
+	
 	public void update() {
 		player.update();
 		c.tick();
@@ -76,12 +74,11 @@ public class Level1State extends GameState {
 			createEnemy(wave);
 		}
 		if (Player.getHealth() <= 0) {	
+			test.PlayMusic("Level1Music.wav", false);
 			gsm.setState(GameStateManager.GAMEOVERSTATE);
 		}
 	}
 		
-
-
 	public void createEnemy(int enemyCount) {
 		for (int i =0; i<enemyCount; i++) {
 			c.addEnemy(new Enemy(r.nextInt(640), r.nextInt(480), player, tileMap, c, this));
@@ -100,6 +97,10 @@ public class Level1State extends GameState {
 		player.draw(g);
 		
 		c.render(g);
+		
+		Player.displayHealthBar(g);
+		Player.updateScore(g);
+		Level1State.UI(g); //sets UI of game
 	}
 
 	public void keyPressed(int k) {
@@ -133,26 +134,10 @@ public class Level1State extends GameState {
 			player.setFiring();
 			lastShotTime = System.currentTimeMillis();
 		}
-		if (k == KeyEvent.VK_UP ||  k == KeyEvent.VK_DOWN || k == KeyEvent.VK_LEFT || k == KeyEvent.VK_RIGHT) test.playFireSound();
+		if (k == KeyEvent.VK_UP ||  k == KeyEvent.VK_DOWN || k == KeyEvent.VK_LEFT || k == KeyEvent.VK_RIGHT) test.playSound("GunSound.wav");
 	}
 	
 	
-	//Getter and setters
-	public int getEnemyCount() {
-		return enemyCount;
-	}
-
-	public void setEnemyCount(int enemyCount) {
-		this.enemyCount = enemyCount;
-	}
-
-	public int getEnemyKilled() {
-		return enemyKilled;
-	}
-
-	public void setEnemyKilled(int enemyKilled) {
-		this.enemyKilled = enemyKilled;
-	}
 
 	public void keyReleased(int k) {
 		if(k == KeyEvent.VK_A) player.setLeft(false);

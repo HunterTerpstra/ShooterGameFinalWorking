@@ -39,8 +39,6 @@ public class MenuState extends GameState{
 		}
 	}
 	
-	SoundClipTest test = new SoundClipTest();
-	
 	public void init() {}
 	public void update() {}
 	public void draw(Graphics2D g) {
@@ -66,10 +64,11 @@ public class MenuState extends GameState{
 		}
 	}
 	
+	SoundClipTest test = new SoundClipTest();
 	private void select() {
 		if (currentChoice == 0) {
+			test.PlayMusic("Level1Music.wav", true);
 			gsm.setState(GameStateManager.LEVEL1STATE);
-			test.PlayLevel1Music(true);
 		}
 		if (currentChoice == 1) {
 			gsm.setState(GameStateManager.SHOPSTATE);

@@ -71,8 +71,6 @@ public class Enemy extends MapObject {
 			killEnemy();
 			c.removeBullet(c.getBullets().get(i));
 			Player.score += 50; 
-			game.setEnemyKilled(game.getEnemyKilled() +1);
-			
 		}
 	}
 	

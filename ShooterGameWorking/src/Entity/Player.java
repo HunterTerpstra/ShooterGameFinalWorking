@@ -42,7 +42,6 @@ public class Player extends MapObject{
 	}
 	
 	public static int getHealth() {
-		System.out.println(health);
 		return health;
 		}
 	
@@ -54,9 +53,7 @@ public class Player extends MapObject{
 		 g.fillRect(495, 15, health, 20);	
 		 g.setColor(Color.black);
 		 g.drawString(Integer.toString(health), 530, 35);
-		 
 		}
-	
 	
 		public static void updateScore(Graphics2D g){
 			

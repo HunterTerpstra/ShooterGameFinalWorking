@@ -30,26 +30,17 @@ public class GameStateManager {
 		currentState = state;
 		gameStates.get(currentState).init();
 	}
+	
 	public static GameState getCurrentState() {
 		return gameStates.get(currentState);
 	}
 	
-	SoundClipTest test = new SoundClipTest();
 	public void update() {
 		gameStates.get(currentState).update();
-		//if(Player.getHealth() == 0) {
-		//	test.PlayLevel1Music(false);
-		//	setState(3);
-		//}
 	}
 	
 	public void draw(java.awt.Graphics2D g) {
 		gameStates.get(currentState).draw(g);
-		if(currentState == 2) {
-			Player.displayHealthBar(g);
-			Player.updateScore(g);
-			Level1State.UI(g); //sets UI of game
-		}
 	}
 	
 	public void keyPressed(int k) {

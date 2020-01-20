@@ -24,10 +24,10 @@ public class SoundClipTest extends JFrame{
    public SoundClipTest() {
    
    }
-	   public void playFireSound() {
+	   public void playSound(String path) {
        try {
          // Open an audio input stream.
-         URL url = this.getClass().getClassLoader().getResource("GunSound.wav");
+         URL url = this.getClass().getClassLoader().getResource(path);
          
          AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
          // Get a sound clip resource.
@@ -45,18 +45,27 @@ public class SoundClipTest extends JFrame{
 	  new SoundClipTest();
 	  }
 
-	   public void PlayLevel1Music(boolean check) {
+	   public void PlayMusic(String path, boolean isRunning) {
+		 
+		   
 		   Clip clip = null;
 		   try {
-		   URL url = this.getClass().getClassLoader().getResource("GunSound.wav");
+		   URL url = this.getClass().getClassLoader().getResource(path);
 	         
 	         AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+	         
+	         
 	         // Get a sound clip resource.
 	         clip = AudioSystem.getClip();
 	         // Open audio clip and load samples from the audio input stream.
 	         clip.open(audioIn);
-	         clip.start();
-	         //clip.loop(Clip.LOOP_CONTINUOUSLY);
+	         //clip.start();
+	         clip.loop(Clip.LOOP_CONTINUOUSLY);
+	         
+	         if (!isRunning) {
+	        	 clip.stop();
+	         }
+	         
 	      } catch (UnsupportedAudioFileException e) {
 	         e.printStackTrace();
 	      } catch (IOException e) {
@@ -65,7 +74,7 @@ public class SoundClipTest extends JFrame{
 	         e.printStackTrace();
 	      }
 		  
-		  new SoundClipTest();
+		  //new SoundClipTest();
 	   }
 	   
 }
